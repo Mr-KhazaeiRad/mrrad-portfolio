@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" fill="none">
+  <defs>
+    <radialGradient id="glow"><stop stop-color="#72d69b" stop-opacity=".13"/><stop offset="1" stop-color="#72d69b" stop-opacity="0"/></radialGradient>
+    <linearGradient id="glass" x1="177" y1="151" x2="421" y2="444" gradientUnits="userSpaceOnUse"><stop stop-color="#a9f7c4" stop-opacity=".16"/><stop offset=".5" stop-color="#15271e" stop-opacity=".8"/><stop offset="1" stop-color="#83cc9e" stop-opacity=".08"/></linearGradient>
+    <linearGradient id="edge" x1="180" y1="140" x2="420" y2="452" gradientUnits="userSpaceOnUse"><stop stop-color="#e6ffe9" stop-opacity=".7"/><stop offset=".35" stop-color="#77b38a" stop-opacity=".15"/><stop offset=".7" stop-color="#a3f4bf" stop-opacity=".4"/><stop offset="1" stop-color="#d5ffe3" stop-opacity=".6"/></linearGradient>
+    <linearGradient id="metal" x1="210" y1="210" x2="386" y2="365" gradientUnits="userSpaceOnUse"><stop stop-color="#f3fff6"/><stop offset=".2" stop-color="#d3ffe0"/><stop offset=".48" stop-color="#9de8b7"/><stop offset=".75" stop-color="#5eaf80"/><stop offset="1" stop-color="#d1ffdc"/></linearGradient>
+    <linearGradient id="metal-side" x1="200" y1="260" x2="400" y2="360" gradientUnits="userSpaceOnUse"><stop stop-color="#315f43"/><stop offset=".5" stop-color="#81bd8e"/><stop offset="1" stop-color="#223e2a"/></linearGradient>
+    <linearGradient id="ring" x1="120" y1="120" x2="460" y2="480" gradientUnits="userSpaceOnUse"><stop stop-color="#d5ffe0" stop-opacity=".5"/><stop offset=".4" stop-color="#90d1a3" stop-opacity=".08"/><stop offset="1" stop-color="#a0d8b4" stop-opacity=".35"/></linearGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="3"/></filter>
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="1" dy="12" stdDeviation="13" flood-color="#000" flood-opacity=".55"/></filter>
+    <filter id="dot-glow" x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur stdDeviation="4"/></filter>
+  </defs>
+  <circle cx="300" cy="300" r="268" fill="url(#glow)"/>
+  <g stroke="url(#ring)" stroke-width=".8">
+    <circle cx="300" cy="300" r="223" stroke-dasharray="2 7" opacity=".45"/>
+    <circle cx="300" cy="300" r="188" opacity=".3"/>
+    <ellipse cx="300" cy="300" rx="247" ry="102" transform="rotate(-38 300 300)"/>
+    <ellipse cx="300" cy="300" rx="238" ry="116" transform="rotate(44 300 300)" opacity=".6"/>
+    <ellipse cx="300" cy="300" rx="171" ry="224" transform="rotate(24 300 300)" opacity=".35"/>
+  </g>
+  <g opacity=".4" stroke="#99d3aa" stroke-width=".5"><path d="M300 64v22m0 428v22M64 300h22m428 0h22"/><path d="m130 130 9 9m322 322 9 9m-340 0 9-9m322-322 9-9"/></g>
+  <g filter="url(#shadow)" transform="rotate(-12 300 300)">
+    <rect x="174" y="170" width="266" height="266" rx="54" fill="#0a100c" stroke="#547d60" stroke-opacity=".4" transform="rotate(8 307 303)"/>
+    <rect x="167" y="157" width="266" height="266" rx="54" fill="url(#glass)" stroke="url(#edge)" stroke-width="1.2"/>
+    <rect x="178" y="168" width="244" height="244" rx="46" stroke="#ceffdc" stroke-opacity=".045"/>
+    <path d="M197 219v-13a19 19 0 0 1 19-19h14" stroke="#d5ffe0" stroke-opacity=".3" stroke-linecap="round"/>
+    <path d="M403 361v14a19 19 0 0 1-19 19h-14" stroke="#d5ffe0" stroke-opacity=".2" stroke-linecap="round"/>
+    <g transform="translate(5 9)" stroke="url(#metal-side)" stroke-width="17" stroke-linecap="square" stroke-linejoin="miter"><path d="m247 256-37 34 37 34m106-68 37 34-37 34m-37-86-30 107"/></g>
+    <g stroke="url(#metal)" stroke-width="17" stroke-linecap="square" stroke-linejoin="miter"><path d="m247 256-37 34 37 34m106-68 37 34-37 34m-37-86-30 107"/></g>
+    <path d="m246 249-44 40 8 7m145-47 44 40m-78-58-33 116" stroke="#f1fff4" stroke-opacity=".65" stroke-width="1.1"/>
+    <circle cx="196" cy="387" r="2" fill="#9df0b9" opacity=".5"/><path d="M205 387h28" stroke="#9df0b9" stroke-opacity=".25"/>
+    <path d="M370 189h27" stroke="#9df0b9" stroke-opacity=".25"/>
+  </g>
+  <path d="M107 397c73 63 266 8 387-133" stroke="url(#ring)" stroke-width="1.1"/>
+  <g fill="#c9ffdb"><circle cx="111" cy="211" r="3"/><circle cx="480" cy="394" r="3.5"/><circle cx="431" cy="138" r="2.5"/><circle cx="161" cy="451" r="2"/><circle cx="494" cy="264" r="3"/></g>
+  <g fill="#a7ffcb" filter="url(#dot-glow)" opacity=".7"><circle cx="111" cy="211" r="4"/><circle cx="480" cy="394" r="5"/><circle cx="431" cy="138" r="4"/></g>
+  <g fill="#84b598" opacity=".55"><circle cx="243" cy="78" r="1.5"/><circle cx="539" cy="317" r="1"/><circle cx="346" cy="522" r="1.5"/><circle cx="78" cy="346" r="1.5"/><circle cx="374" cy="106" r="1"/><circle cx="94" cy="137" r="1"/></g>
+</svg>
