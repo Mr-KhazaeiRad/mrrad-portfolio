@@ -21,4 +21,5 @@ BlackHolesCoin — بازی کلیکی مرورگری با جاوااسکریپ�
 نسخه آنلاین: https://mr-khazaeirad.github.io/BlackHolesCoin/
 
 گیت‌هاب: https://github.com/Mr-KhazaeiRad
+ایمیل: mr.khazaeirad@gmail.com
 سایت: https://mr-khazaeirad.github.io/mrrad-portfolio/
