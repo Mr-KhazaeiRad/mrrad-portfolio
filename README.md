@@ -1,9 +1,17 @@
-# DEV — پورتفولیوی شخصی
+# محمد خزائی راد — پورتفولیوی شخصی
 
-نسخه تست سایت تک‌صفحه‌ای فارسی و راست‌چین برای حساب `Mr-KhazaeiRad`.
+سایت فارسی محمد خزائی راد، برنامه‌نویس سی‌شارپ، بازی‌ساز و طراح و توسعه‌دهنده وب.
 
-**آدرس مورد انتظار پس از فعال شدن GitHub Pages:**
+**آدرس سایت:**
 https://mr-khazaeirad.github.io/mrrad-portfolio/
+
+**[رزومه آنلاین](https://mr-khazaeirad.github.io/mrrad-portfolio/resume.html)** · **[رزومه PDF](https://mr-khazaeirad.github.io/mrrad-portfolio/assets/resume-mohammad-khazaei-rad.pdf)**
+
+## پروژه‌های منتخب
+
+- **هوا** — داشبورد فارسی آب‌وهوا. [نسخه آنلاین](https://mr-khazaeirad.github.io/hava-weather-site/) · [سورس](https://github.com/Mr-KhazaeiRad/hava-weather-site)
+- **رویش** — وب‌اپلیکیشن پیگیری عادت‌های روزانه. [نسخه آنلاین](https://mr-khazaeirad.github.io/rooyesh-habits/) · [سورس](https://github.com/Mr-KhazaeiRad/rooyesh-habits)
+- **BlackHolesCoin** — بازی کلیکی مرورگری با جاوااسکریپت. [نسخه آنلاین](https://mr-khazaeirad.github.io/BlackHolesCoin/) · [سورس](https://github.com/Mr-KhazaeiRad/BlackHolesCoin)
 
 ## ساختار
 
@@ -11,7 +19,8 @@ https://mr-khazaeirad.github.io/mrrad-portfolio/
 - `styles.css`: رنگ‌ها، چیدمان، نمایش موبایل و انیمیشن‌ها
 - `app.js`: منوها، فیلتر پروژه‌ها، پنجره‌ها و ترمینال
 - `profile.js`: نام، ایمیل، موقعیت و لینک‌های شخصی
-- `assets/`: فونت، گرافیک، آیکن و نمونه رزومه
+- `resume.html`: رزومه آنلاین و قابل چاپ
+- `assets/`: فونت، گرافیک، تصاویر پروژه‌ها و رزومه PDF
 - `.nojekyll`: ارائه مستقیم فایل‌ها بدون پردازش Jekyll
 
 این سایت استاتیک است و به Node.js، فایل CMD، نصب پکیج یا مرحله build برای GitHub Pages نیاز ندارد.
@@ -22,9 +31,9 @@ https://mr-khazaeirad.github.io/mrrad-portfolio/
 
 تمام مسیرهای فایل‌ها نسبی‌اند تا سایت در مسیر `/mrrad-portfolio/` درست نمایش داده شود.
 
-## اطلاعات نمونه
+## ارتباط
 
-نام، ایمیل، مهارت‌ها، تجربه‌ها و پروژه‌ها فعلاً نمونه‌اند و باید با مشخصات واقعی جایگزین شوند. فرم ارتباط در حالت نمونه پیام ارسال نمی‌کند. بعد از وارد کردن ایمیل واقعی در `profile.js` و تنظیم `isDemo: false`، فرم پیش‌نویس را با `mailto:` در برنامه ایمیل کاربر باز می‌کند؛ ارسال خودکار یا ذخیره‌سازی سرور ندارد.
+لینک پروفایل گیت‌هاب مشخص است. دکمه‌های ایمیل فقط با وارد کردن یک آدرس عمومی معتبر در `profile.js` نمایش داده می‌شوند. فرم با `mailto:` پیش‌نویس را در برنامه ایمیل کاربر باز می‌کند و ارسال خودکار یا ذخیره‌سازی سرور ندارد.
 
 ## فونت
 

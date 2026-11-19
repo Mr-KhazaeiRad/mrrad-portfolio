@@ -5,28 +5,22 @@
   const $$ = (selector, scope = document) => [...scope.querySelectorAll(selector)];
   const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
   const finePointer = window.matchMedia('(pointer: fine)');
-  $('.command-button').setAttribute('aria-label', '⌘ K — باز کردن منوی دسترسی سریع');
-  $('.site-footer .brand').setAttribute('aria-label', 'dev — بازگشت به بالای صفحه');
-  const profile = {
-    name: 'نام شما',
-    codeName: 'Your Name',
-    email: 'hello@example.com',
-    location: 'ایران · آماده همکاری ریموت',
-    github: '',
-    linkedin: '',
-    isDemo: true,
-    ...window.PORTFOLIO_PROFILE,
-  };
+  const profile = window.PORTFOLIO_PROFILE || {};
+  const email = typeof profile.email === 'string' ? profile.email.trim() : '';
+  const emailEnabled = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const openContact = $('#open-contact');
+  const copyEmail = $('#copy-email');
 
   $$('[data-profile]').forEach(element => {
     const key = element.dataset.profile;
-    if (profile[key]) element.textContent = key === 'codeName' ? `"${profile[key]}"` : profile[key];
+    if (profile[key]) element.textContent = key === 'codeName' ? JSON.stringify(profile[key]) : profile[key];
   });
   $('#current-year').textContent = new Intl.NumberFormat('fa-IR', { useGrouping: false }).format(new Date().getFullYear());
-  if (!profile.isDemo) {
-    $('.contact-placeholder-note').hidden = true;
-    $('.form-demo-note').hidden = true;
-    $('.footer-demo').textContent = 'طراحی و توسعه با اشتیاق';
+  if (emailEnabled) {
+    openContact.hidden = false;
+    copyEmail.hidden = false;
+    $('[data-profile="email"]', copyEmail).textContent = email;
+    copyEmail.setAttribute('aria-label', `${email} — کپی آدرس ایمیل`);
   }
 
   // A quiet notification, used instead of non-working placeholder links.
@@ -39,21 +33,23 @@
     toastTimer = setTimeout(() => toast.classList.remove('visible'), 4300);
   }
 
-  $$('[data-social]').forEach(button => {
-    const network = button.dataset.social;
+  $$('[data-social]').forEach(link => {
+    const network = link.dataset.social;
     const allowedHost = network === 'github' ? 'github.com' : 'linkedin.com';
     let destination;
     try {
       const candidate = new URL(profile[network]);
       if (candidate.protocol === 'https:' && (candidate.hostname === allowedHost || candidate.hostname === `www.${allowedHost}`)) destination = candidate.href;
-    } catch { /* Unconfigured social links stay in demo mode. */ }
-    button.addEventListener('click', () => {
-      if (destination) {
-        window.open(destination, '_blank', 'noopener,noreferrer');
-      } else {
-        notify(`لینک ${network === 'github' ? 'گیت‌هاب' : 'لینکدین'} شما هنوز وارد نشده؛ بعداً اضافه‌اش می‌کنیم.`);
+    } catch { /* Leave the static GitHub fallback; hide unconfigured networks. */ }
+    if (destination) {
+      link.href = destination;
+      link.hidden = false;
+      if (network === 'github') {
+        const repos = new URL(destination);
+        repos.searchParams.set('tab', 'repositories');
+        $('[data-github-repos]').href = repos.href;
       }
-    });
+    }
   });
 
   // Mobile navigation.
@@ -127,7 +123,7 @@
 
   // A subtle typing label; paused in background tabs and for reduced motion.
   const roleLabel = $('#changing-role');
-  const roles = ['CREATIVE DEVELOPER', 'FRONT-END DEVELOPER', 'PROBLEM SOLVER', 'ALWAYS A LEARNER'];
+  const roles = ['C# DEVELOPER', 'GAME DEVELOPER', 'WEB DESIGNER'];
   let roleIndex = 0;
   let roleTimer;
   function typeNextRole() {
@@ -250,63 +246,23 @@
   });
   $$('.command-links a').forEach(link => link.addEventListener('click', () => commandDialog.close()));
 
-  const projects = {
-    nexus: {
-      title: 'نکسوس — داشبورد مدیریت',
-      description: 'یک کانسپت برای داشبورد تحلیلی که داده‌های پراکنده را به تصویری روشن از وضعیت کسب‌وکار تبدیل می‌کند. طراحی تیره، نمودارهای خوانا و ساختاری که کاربر را مستقیم به اطلاعات مهم می‌رساند.',
-      tags: ['React', 'TypeScript', 'Chart.js', 'Responsive Design'],
-      features: ['نمای یکپارچه درآمد و کاربران', 'زبان بصری آرام و متمرکز برای داده‌های پیچیده', 'طرح واکنش‌گرا و کامپوننت‌های قابل استفاده مجدد'],
-    },
-    orbit: {
-      title: 'اوربیت — استودیو خلاق',
-      description: 'یک کانسپت وب‌سایت برای استودیویی که دوست ندارد شبیه بقیه باشد. تایپوگرافی درشت، رنگ‌های جسورانه و جزئیات غیرمنتظره در خدمت یک هویت بصری متمایز.',
-      tags: ['Next.js', 'CSS Motion', 'Figma', 'Creative Development'],
-      features: ['لندینگ جسورانه و تایپوگرافی ادیتوریال', 'هویت بصری متفاوت برای یک استودیو طراحی', 'ایده‌پردازی تعامل‌ها و حرکت‌های ظریف در رابط'],
-    },
-    violet: {
-      title: 'ویولت — فروشگاه آنلاین',
-      description: 'یک کانسپت فروشگاه مینیمال که محصول را در مرکز توجه قرار می‌دهد. رنگ‌های ملایم، جزئیات دقیق و مسیری ساده برای آشنایی با محصول و انتخاب آن.',
-      tags: ['Next.js', 'Node.js', 'Tailwind CSS', 'E-commerce UI'],
-      features: ['ارائه مینیمال و متمرکز روی محصول', 'پالت رنگی ملایم و چیدمان خوانا', 'طراحی اولیه مسیر مشاهده و انتخاب محصول'],
-    },
-  };
   const projectDialog = $('#project-dialog');
   $$('[data-open-project]').forEach(button => button.addEventListener('click', () => {
-    const id = button.dataset.openProject;
-    const project = projects[id];
-    if (!project) return;
-    $('#project-dialog-title').textContent = project.title;
-    $('#project-dialog-description').textContent = project.description;
-    const preview = $(`[data-project="${id}"] .project-preview`).cloneNode(true);
-    preview.removeAttribute('data-open-project');
-    preview.removeAttribute('aria-label');
-    preview.setAttribute('tabindex', '-1');
-    // The cloned illustration does not create duplicate SVG IDs.
-    $$('[id]', preview).forEach(element => {
-      const oldId = element.id;
-      element.id = `dialog-${oldId}`;
-      $$('[fill], [stroke]', preview).forEach(shape => {
-        for (const attribute of ['fill', 'stroke']) {
-          if (shape.getAttribute(attribute) === `url(#${oldId})`) {
-            shape.setAttribute(attribute, `url(#dialog-${oldId})`);
-          }
-        }
-      });
-    });
-    $('#project-dialog-preview').replaceChildren(preview);
-    $('#project-dialog-tags').replaceChildren(...project.tags.map(tag => {
-      const element = document.createElement('span');
-      element.textContent = tag;
-      return element;
-    }));
-    $('#project-dialog-features').replaceChildren(...project.features.map(feature => {
-      const item = document.createElement('li');
-      item.textContent = feature;
-      return item;
-    }));
+    const card = button.closest('.project-card');
+    const details = $('.project-details', card).content;
+    $('#project-dialog-kind').textContent = $('.project-kind', card).textContent;
+    $('#project-dialog-title').replaceChildren(...[...$('h3', card).childNodes].map(node => node.cloneNode(true)));
+    $('#project-dialog-description').textContent = $('p', details).textContent;
+    const image = $('img', button).cloneNode(true);
+    image.loading = 'eager';
+    $('#project-dialog-preview').dataset.project = card.dataset.project;
+    $('#project-dialog-preview').replaceChildren(image);
+    $('#project-dialog-tags').replaceChildren(...$$('.tags > span', card).map(node => node.cloneNode(true)));
+    $('#project-dialog-features').replaceChildren(...$$('li', details).map(node => node.cloneNode(true)));
+    $('#project-demo').href = $('.project-live', card).href;
+    $('#project-repository').href = $('.project-source', card).href;
     openDialog(projectDialog);
   }));
-  $('#project-contact').addEventListener('click', () => projectDialog.close());
 
   // A small, real interactive terminal. No commands execute on the machine.
   const terminal = $('#terminal-output');
@@ -315,11 +271,11 @@
   let historyPosition = 0;
   const commands = {
     help: () => 'Available commands:\n  about     A little introduction\n  skills    My digital toolbox\n  projects  Explore selected projects\n  contact   Let’s talk\n  whoami    Who is behind the code?\n  date      Today on planet Earth\n  clear     Clear this terminal',
-    about: () => 'A curious developer who turns ideas into thoughtful digital experiences.\nAlways learning. Always building.',
-    whoami: () => `${profile.codeName} — Creative Developer${profile.isDemo ? '\n[Demo profile — ready for your real story]' : ''}`,
-    skills: () => 'Front-end → React, Next.js, TypeScript, CSS\nBack-end  → Node.js, Express, PostgreSQL\nTools     → Git, Figma, Docker, Coffee ☕',
-    projects: () => { projectDialog.close(); $('#projects').scrollIntoView({ behavior: motionQuery.matches ? 'instant' : 'smooth' }); return 'Opening selected projects…\nNexus / Orbit / Violet — portfolio design concepts.'; },
-    contact: () => { $('#contact').scrollIntoView({ behavior: motionQuery.matches ? 'instant' : 'smooth' }); return `${profile.email}${profile.isDemo ? ' [placeholder email]' : ''}\nGreat things start with a hello.`; },
+    about: () => 'Several years of programming, with a focus on C#, game development, and web design.',
+    whoami: () => `${profile.codeName || 'Mohammad Khazaei Rad'} — C# / Games / Web`,
+    skills: () => 'Games → C#, game logic\nWeb   → HTML, CSS, JavaScript, Tailwind CSS\nTools → Web APIs, localStorage, GitHub Pages',
+    projects: () => { $('#projects').scrollIntoView({ behavior: motionQuery.matches ? 'instant' : 'smooth' }); return 'Opening selected projects…\nHava / Rooyesh / BlackHolesCoin'; },
+    contact: () => { $('#contact').scrollIntoView({ behavior: motionQuery.matches ? 'instant' : 'smooth' }); return `GitHub: ${$('[data-social="github"]').href}${emailEnabled ? `\nEmail: ${email}` : ''}`; },
     date: () => new Intl.DateTimeFormat('en-GB', { dateStyle: 'full' }).format(new Date()),
     sudo: () => 'Nice try :) This terminal runs on curiosity, not root access.',
     coffee: () => '☕ Brewing ideas… Ready to build something great.',
@@ -338,7 +294,7 @@
       return;
     }
     const inputLine = document.createElement('p');
-    inputLine.textContent = `visitor@dev:~$ ${raw}`;
+    inputLine.textContent = `visitor@mrrad:~$ ${raw}`;
     const response = document.createElement('p');
     response.className = 'terminal-response';
     const name = raw.toLowerCase();
@@ -356,14 +312,15 @@
   });
 
   // Explicit copy action, with a useful fallback if clipboard access is blocked.
-  $('#copy-email').addEventListener('click', async () => {
+  copyEmail.addEventListener('click', async () => {
+    if (!emailEnabled) return;
     try {
-      await navigator.clipboard.writeText(profile.email);
-      notify(profile.isDemo ? 'ایمیل نمونه کپی شد؛ بعداً آدرس واقعی شما رو می‌ذاریم.' : 'آدرس ایمیل کپی شد. منتظر پیامت هستم!');
+      await navigator.clipboard.writeText(email);
+      notify('آدرس ایمیل کپی شد.');
     } catch {
       const selection = window.getSelection();
       const range = document.createRange();
-      range.selectNodeContents($('#copy-email [data-profile="email"]'));
+      range.selectNodeContents($('[data-profile="email"]', copyEmail));
       selection.removeAllRanges();
       selection.addRange(range);
       notify('ایمیل انتخاب شد؛ با Ctrl+C یا لمس طولانی کپی‌اش کن.');
@@ -371,20 +328,17 @@
   });
 
   const contactDialog = $('#contact-dialog');
-  $('#open-contact').addEventListener('click', () => openDialog(contactDialog));
+  openContact.addEventListener('click', () => { if (emailEnabled) openDialog(contactDialog); });
   $('#contact-form').addEventListener('submit', event => {
     event.preventDefault();
     const form = event.currentTarget;
     if (!form.reportValidity()) return;
     const feedback = $('#contact-feedback');
-    if (profile.isDemo || profile.email === 'hello@example.com') {
-      feedback.textContent = 'فرم آماده است، اما ایمیل هنوز نمونه است. برای ارسال واقعی، ایمیل خودت را در public/profile.js وارد کن و isDemo را false بگذار.';
-      return;
-    }
+    if (!emailEnabled) return;
     const data = new FormData(form);
     const subject = `گفتگو درباره یک پروژه — ${data.get('name')}`;
     const body = `سلام!\n\nنام: ${data.get('name')}\nایمیل: ${data.get('email')}\n\n${data.get('message')}`;
-    window.location.href = `mailto:${encodeURIComponent(profile.email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = `mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     feedback.textContent = 'پیش‌نویس برای برنامه ایمیل آماده شد. اگر برنامه‌ای باز نشد، آدرس ایمیل را از صفحه کپی کن.';
   });
 })();
