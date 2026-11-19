@@ -338,7 +338,12 @@
     const data = new FormData(form);
     const subject = `گفتگو درباره یک پروژه — ${data.get('name')}`;
     const body = `سلام!\n\nنام: ${data.get('name')}\nایمیل: ${data.get('email')}\n\n${data.get('message')}`;
-    window.location.href = `mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    const draft = document.createElement('a');
+    draft.href = `mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    draft.hidden = true;
+    form.append(draft);
+    draft.click();
+    draft.remove();
     feedback.textContent = 'پیش‌نویس برای برنامه ایمیل آماده شد. اگر برنامه‌ای باز نشد، آدرس ایمیل را از صفحه کپی کن.';
   });
 })();

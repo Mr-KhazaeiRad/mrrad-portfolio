@@ -7,7 +7,7 @@
 window.PORTFOLIO_PROFILE = {
   name: 'محمد خزائی راد',
   codeName: 'Mohammad Khazaei Rad',
-  email: '',
+  email: 'mr.khazaeirad@gmail.com',
   location: 'ایران',
   github: 'https://github.com/Mr-KhazaeiRad',
   linkedin: '',
